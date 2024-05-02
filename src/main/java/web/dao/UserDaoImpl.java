@@ -5,11 +5,13 @@ import org.springframework.stereotype.Repository;
 import web.model.User;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
 public class UserDaoImpl implements UserDAO {
 
+   @PersistenceContext
     private final EntityManager entityManager;
 
     @Autowired
@@ -20,11 +22,7 @@ public class UserDaoImpl implements UserDAO {
 
     @Override
     public void save(User user) {
-        entityManager.getTransaction().begin();
-
         entityManager.persist(user);
-
-        entityManager.getTransaction().commit();
     }
 
 
@@ -40,8 +38,6 @@ public class UserDaoImpl implements UserDAO {
 
     @Override
     public void update(int id, User user) {
-        entityManager.getTransaction().begin();
-
         User updateUser = entityManager.find(User.class, id);
 
         updateUser.setSurname(user.getSurname());
@@ -49,15 +45,12 @@ public class UserDaoImpl implements UserDAO {
         updateUser.setSex(user.getSex());
 
         entityManager.merge(updateUser);
-        entityManager.getTransaction().commit();
     }
 
     @Override
     public void delete(int id) {
-        entityManager.getTransaction().begin();
         User user = entityManager.find(User.class, id);
         entityManager.remove(user);
-        entityManager.getTransaction().commit();
     }
 
 }

@@ -17,21 +17,25 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
+    @Transactional
     public void save(User user) {
         userDAO.save(user);
     }
 
     @Override
+    @Transactional
     public void update(int id, User user) {
         userDAO.update(id, user);
     }
 
     @Override
+    @Transactional
     public void delete(int id) {
         userDAO.delete(id);
     }
 
     @Override
+    @Transactional
     public User findById(int id) {
         return userDAO.findById(id);
     }
